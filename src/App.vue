@@ -35,16 +35,15 @@
     <div id="app">
       <router-view></router-view>
     </div>
-    <span v-if="isAuthenticated">
+    <span v-if="isAuth">
       <nav class="nav_admin">
         <span v-if="isAdmin">
           <div>
             <img
                 class="logo_nav_admin"
                 alt="logo"
-                src="../src/assets/img/admin.png"
+                src="../src/assets/img/owl.png"
             />
-            <span class="logo_text">Снежный мир</span>
           </div>
           <router-link to="/disciplines">Дисциплины</router-link>
           <router-link to="/teachers">Преподаватели</router-link>
@@ -68,6 +67,7 @@
 
 <style></style>
 <script>
+import store from "@/store/index.js";
 export default {
   data() {
     return {
@@ -75,6 +75,10 @@ export default {
       isAdmin: false,
       isAuthRelatedPage: false,
     };
+  },
+  computed: {
+    isAuth: () => this.$store.state.isAuthenticated,
+    isAdmin: () => this.$store.state.isAdmin,
   },
   watch: {
     $route(to) {

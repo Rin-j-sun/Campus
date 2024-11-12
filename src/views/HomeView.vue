@@ -24,19 +24,10 @@
             </p>
           </div>
         </div>
+
+        <div><img src="/src/assets/img/people.png"></div>
+
       </div>
-    </section>
-    <section class="guids content">
-
-    </section>
-    <section id="about" class="about content">
-
-    </section>
-    <section id="contacts" class="contacts content">
-
-
-
-<!--      <InteractiveMap />-->
     </section>
   </div>
 </template>
@@ -59,7 +50,7 @@ export default {
   },
   methods: {
     async getGuids() {
-      const url = "http://127.0.0.1:8000/api/guide";
+      const url = "";
       const response = await fetch(url, {
         method: "GET",
         headers: {
