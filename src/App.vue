@@ -4,9 +4,9 @@
   </div>
   <div class="container" v-if="!isAuthRelatedPage">
     <nav class="navigation content">
-      <span class="nav" v-if="!isAuthenticated">
+      <span class="home" v-if="!isAuthenticated">
         <img
-            class="logo_nav"
+            class="home_logo"
             alt="logo"
             src="../src/assets/img/logo.png"
         />
@@ -55,7 +55,7 @@
         </span>
       </nav>
     </span>
-  </div>
+
   <footer class="footer_container" v-if="!isAuthRelatedPage">
     <img
         class="footer_background"
@@ -64,6 +64,7 @@
     />
 
   </footer>
+  </div>
 </template>
 
 <style></style>
@@ -84,11 +85,7 @@ export default {
   methods: {
     checkAuthRelatedPage(path) {
       this.isAuthRelatedPage =
-          path === "/login" ||
-          path === "/register" ||
-          path === "/password-recovery" ||
-          path === "/reset-password" ||
-          path === "/password-reset";
+          path === "/login";
     },
     scrollToSection(sectionId) {
       const section = document.getElementById(sectionId);

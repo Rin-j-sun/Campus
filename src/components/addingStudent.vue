@@ -1,20 +1,30 @@
-<script setup>
-defineProps({
-  msg: {
-    type: String,
-    required: true,
-  },
-})
-</script>
-
 <template>
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
-    <h3>
-      You’ve successfully created a project with
-      <a href="https://vite.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
-    </h3>
+    <h3>Добавить студента</h3>
+
+    <form class="add_student">
+      <div>
+        <label>Фамилия</label>
+      </div>
+      <div>
+        <label>Имя</label>
+      </div>
+      <div>
+        <label>Фамилия</label>
+      </div>
+      <div>
+        <label>Отчество</label>
+      </div>
+      <div>
+        <select name="num_group">
+          <option value="">№ группы</option>
+        </select>
+      </div>
+
+      <button type="submit">Добавить студента</button>
+
+    </form>
   </div>
 </template>
 
@@ -42,3 +52,38 @@ h3 {
   }
 }
 </style>
+
+<script>
+export default {
+  name: "",
+  data() {
+    return {
+      : [],
+      showBlock: false,
+    };
+  },
+  created() {
+    this.();
+  },
+  methods: {
+    async () {
+      const url = "http://127.0.0.1:8000/api/tours";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+      if (response.ok) {
+        const result = await response.json();
+        this. = result.data;
+        console.log("Result: ", result);
+      } else {
+        this.error = "Ошибка";
+        console.error(this.error);
+      }
+    },
+  },
+};
+</script>

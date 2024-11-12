@@ -23,6 +23,25 @@ button{
   border-radius: 50px;
 }
 
+button:active{
+  height: 64px;
+  width: 232px;
+  color: #FFFFFF;
+  background-color: #583E26;
+  border: 2px solid #FFFFFF;
+  border-radius: 50px;
+}
+
+button:hover{
+  height: 64px;
+  width: 232px;
+  color: #EC9704;
+  background-color: #FFFFFF;
+  border: 2px solid #EC9704;
+  border-radius: 50px;
+  box-shadow: 10px 5px 5px #EC9704;
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -54,5 +73,38 @@ a,
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
+  }
+
+  .container{
+   display: flex;
+   flex-direction: column;
+    margin-left: 50%;
+
+  }
+  .home{
+   display: flex;
+    flex-direction: column;
+    margin-bottom: 10%;
+  }
+
+  .home_logo{
+    height: 124px;
+    width: 124px;
+    margin-bottom: 10%;
+    margin-left: 60%;
+  }
+
+  .home h1{
+    width:270%;
+    margin-bottom: 10%;
+  }
+
+  .home button{
+    margin-left: 50%;
+    margin-bottom: 10%;
+  }
+
+  .footer_container{
+    margin-left: 25%;
   }
 }
