@@ -5,16 +5,14 @@
 
     <form class="add_student">
       <div>
-        <label>Фамилия</label>
+        <label type="surname">Фамилия</label>
       </div>
       <div>
-        <label>Имя</label>
+        <label type="name">Имя</label>
       </div>
+
       <div>
-        <label>Фамилия</label>
-      </div>
-      <div>
-        <label>Отчество</label>
+        <label type="patronymic">Отчество</label>
       </div>
       <div>
         <select name="num_group">
@@ -55,18 +53,21 @@ h3 {
 
 <script>
 export default {
-  name: "",
   data() {
     return {
-      : [],
-      showBlock: false,
+      formData: {
+        surname: "",
+        name: "",
+        patronymic: "",
+      },
+      error: "",
+      showBlock: "",
     };
   },
   created() {
-    this.();
   },
   methods: {
-    async () {
+    async hr() {
       const url = "http://127.0.0.1:8000/api/tours";
       const response = await fetch(url, {
         method: "GET",
@@ -76,8 +77,8 @@ export default {
         },
       });
       if (response.ok) {
-        const result = await response.json();
-        this. = result.data;
+        // const result = await response.json();
+        // this. = result.data;
         console.log("Result: ", result);
       } else {
         this.error = "Ошибка";

@@ -23,7 +23,8 @@
               Show More
             </p>
           </div>
-          <div class="main_content_regions"></div>
+        </div>
+      </div>
     </section>
     <section class="guids content">
 
@@ -35,17 +36,17 @@
 
 
 
-      <InteractiveMap />
+<!--      <InteractiveMap />-->
     </section>
   </div>
 </template>
 
 <script>
-import InteractiveMap from "@/components/InteractiveMap.vue";
+// import InteractiveMap from "@/components/InteractiveMap.vue";
 export default {
   name: "HomeView",
   components: {
-    InteractiveMap,
+    // InteractiveMap,
   },
   data() {
     return {

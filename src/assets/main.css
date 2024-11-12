@@ -7,6 +7,11 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: "El Messiri";
+  src: url("/public/fonts/ElMessiri.ttf") format("truetype");
+}
+
 h1, h2, h3, h4 {
   font-weight: normal;
   color: #3C2702;
@@ -49,18 +54,25 @@ button:hover{
   font-weight: normal;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+input{
+  width: 474px;
+  height: 70px;
+  background-color: #EC9704;
+  border-radius: 50px;
 }
 
+/*a,*/
+/*.green {*/
+/*  text-decoration: none;*/
+/*  color: hsla(160, 100%, 37%, 1);*/
+/*  transition: 0.4s;*/
+/*  padding: 3px;*/
+/*}*/
+
 @media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+  /*a:hover {*/
+  /*  background-color: hsla(160, 100%, 37%, 0.2);*/
+  /*}*/
 }
 
 @media (min-width: 1024px) {

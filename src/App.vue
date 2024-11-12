@@ -14,7 +14,7 @@
 
           <h1>Добро Пожаловать В Кампус</h1>
 
-          <button><router-link to="/login">Войти</router-link></button>
+          <router-link to="/login" class=""><button>Войти</button></router-link>
 
         </div>
       </span>
@@ -30,7 +30,6 @@
         <button><router-link to="/students">Студенты</router-link></button>
         <button><router-link to="/profile">Профиль</router-link></button>
 
-        <router-link to="/" @click="logout">Выход</router-link>
       </span>
     </nav>
     <div id="app">

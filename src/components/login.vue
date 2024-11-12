@@ -1,5 +1,4 @@
 <template>
-  <img src="../assets/img/" />
 
   <div class="login_block">
     <div class="form_login">
@@ -8,7 +7,7 @@
         <div class="inputs_login">
           <input
               class="input_form"
-              type="login"
+              type="text"
               v-model="login"
               placeholder="Логин"
           />
@@ -31,6 +30,40 @@
     </div>
   </div>
 </template>
+
+<style>
+.login_block{
+  margin-left: 60%;
+}
+h1 {
+  width: 370%;
+  margin-bottom: 10%;
+}
+
+form{
+  margin-left: 30%;
+}
+input{
+  margin-bottom: 30%;
+}
+
+input::placeholder {
+  font-weight: bold;
+  opacity: 0.5;
+  color: black;
+  padding-left: 10px;
+}
+
+button{
+  margin-left: 80%;
+  margin-bottom: 30%;
+}
+
+img{
+  margin-left: 25%;
+}
+</style>
+
 <script>
 export default {
   data() {
@@ -51,7 +84,7 @@ export default {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          email: this.email,
+          login: this.login,
           password: this.password,
         }),
       });

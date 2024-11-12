@@ -5,18 +5,8 @@
       <div class="cabinet_content">
         <div class="cabinet_head_content">
           <div>
-            <a
-                href="#"
-                @click.prevent="setActiveSection('profile')"
-                :class="{ active: activeSection === 'profile' }"
-            >Профиль</a
-            >
-            <a
-                href="#"
-                @click.prevent="setActiveSection('myTours')"
-                :class="{ active: activeSection === 'myTours' }"
-            >Мои туры</a
-            >
+
+
           </div>
 
 
@@ -79,12 +69,20 @@
           <p>12, abc street, defgh, ijklm - 123456.</p>
         </div>
 
+        <router-link to="/" @click="logout"><button>Выход</button></router-link>
+
       </section>
 
 
     </div>
   </div>
 </template>
+
+<style>
+
+
+</style>
+
 <script setup>
 import { ref } from "vue";
 
@@ -95,3 +93,5 @@ function setActiveSection(section) {
 }
 </script>
 <style scoped></style>
+<script setup lang="ts">
+</script>
