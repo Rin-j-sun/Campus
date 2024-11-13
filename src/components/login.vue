@@ -1,7 +1,7 @@
 <template>
   <router-view></router-view>
 
-  <div class="login_block" >
+  <div class="login_block" v-if="!isAuthRelatedPage && !isAuthenticated">
     <div class="form_login">
       <h1>Добро Пожаловать В Кампус</h1>
       <form @submit.prevent="login">
@@ -67,11 +67,12 @@ img{
 
 <script>
 import { mapActions } from 'vuex';
+// import {auth} from "@/firebase.js";
 
 export default {
   data() {
     return {
-      username: '',
+      login: '',
       password: '',
     };
   },

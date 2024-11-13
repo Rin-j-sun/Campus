@@ -33,7 +33,6 @@
 </template>
 
 <script>
-// import InteractiveMap from "@/components/InteractiveMap.vue";
 export default {
   name: "HomeView",
   components: {

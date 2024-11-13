@@ -1,9 +1,8 @@
 <template>
-    <router-view></router-view>
 
-    <div v-if="!isAuthRelatedPage">
+    <div v-if="!isAuthRelatedPage && !isAuthenticated && !isLoginPage">
       <nav class="navigation content">
-        <span class="home" v-if="!isAuthenticated">
+        <span class="home">
           <img class="home_logo" alt="logo" src="../src/assets/img/logo.png" />
           <div class="home_page">
             <h1>Добро Пожаловать В Кампус</h1>
@@ -14,10 +13,12 @@
         </span>
       </nav>
 
-      <footer class="footer_container" v-if="!isAuthRelatedPage">
+      <footer class="footer_container">
         <img class="footer_background" alt="footer_background" src="../src/assets/img/image%203.png" />
       </footer>
     </div>
+
+  <router-view></router-view>
 </template>
 
 <script>
@@ -29,17 +30,9 @@ export default {
       console.log('isAuthenticated:', this.$store.getters.isAuthenticated);
       return this.$store.getters.isAuthenticated;
     },
-    isAdmin() {
-      console.log('isAdmin:', this.$store.getters.isAdmin);
-      return this.$store.getters.isAdmin;
-    },
-    isTeacher() {
-      console.log('isTeacher:', this.$store.getters.isTeacher);
-      return this.$store.getters.isTeacher;
-    },
-    isStudent() {
-      console.log('isStudent:', this.$store.getters.isStudent);
-      return this.$store.getters.isStudent;
+    // Проверяем, находимся ли мы на странице входа
+    isLoginPage() {
+      return this.$route.path === '/login'; // если текущий маршрут '/login', то страница входа
     },
     isAuthRelatedPage() {
       console.log('isAuthRelatedPage:', this.$store.getters.isAuthRelatedPage);
@@ -49,16 +42,6 @@ export default {
 
 
   methods: {
-    // loginUser() {
-    //
-    //   this.$store.dispatch("login", { isAuthenticated: true, role: "admin" });
-    //   console.log(this.$store.state.isAuthenticated);
-    // },
-    // logoutUser() {
-    //
-    //   this.$store.dispatch("logout");
-    //   console.log(this.$store.state.isAuthenticated);
-    // },
   }
 
 };
