@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import searchStudent from "@/components/searchStudent.vue";
 import addingStudent from "@/components/addingStudent.vue";
 import login from "@/components/login.vue";
+import firstPage from "@/components/firstPage.vue";
 import AdminPage from "@/components/AdminPage.vue";
 import TeacherPage from "@/components/TeacherPage.vue";
 import StudentPage from "@/components/StudentPage.vue";
@@ -18,10 +19,16 @@ const routes = [
     },
 
      {
-         path: "/@/components/login",
+         path: "/login",
          name: "login",
          component: login,
          meta: { requiresAuth: false },
+     },
+    {
+         path: "/firstpage",
+         name: "firstpage",
+         component: firstPage,
+         meta: { requiresAuth: true },
      },
     {
         path: '/admin',

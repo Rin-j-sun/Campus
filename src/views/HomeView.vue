@@ -1,72 +1,98 @@
 <template>
   <div class="container">
-    <section id="main" class="regions">
-      <img
-          class="regions_background"
-          alt="regions_background"
-          src="../assets/img/"
-      />
-      <div class="content">
-        <div class="main_content">
-          <div class="main_content_desc">
-            <p>О нашем сайте</p>
-            <h1>
-              Лучший сайт в мире!
-            </h1>
-            <p>
-              In the first course of the Machine Learning Specialization, you will:
-              • Build machine learning models in Python using popular machine learning libraries NumPy and scikit-learn. • Build and train supervised machine learning models for prediction and binary classification tasks, including linear regression and logistic regression
-              In the first course of the Machine Learning Specialization, you will:
-              • Build machine learning models in Python using popular machine learning libraries NumPy and scikit-learn. • Build and train supervised machine learning models for prediction and binary classification tasks, including linear regression and logistic regression
-              In the first course of the Machine Learning Specialization, you will:
-              • Build machine learning models in Python using popular machine learning libraries NumPy and scikit-learn. • Build and train supervised machine learning models for prediction and binary classification tasks, including linear regression and logistic regression
-              Show More
-            </p>
-          </div>
-        </div>
+    <!-- Навигация для авторизованного пользователя -->
+    <span class="nav" v-if="isAuthenticated">
+          <img class="logo_nav" alt="logo" src="../src/assets/img/logo.png'" />
+          <button><router-link to="/">Главная</router-link></button>
+          <button><router-link to="/schedule">Расписание</router-link></button>
+          <button><router-link to="/performance">Успеваемость</router-link></button>
+          <button><router-link to="/students">Студенты</router-link></button>
+          <button><router-link to="/profile">Профиль</router-link></button>
+        </span>
 
-        <div><img src="/src/assets/img/people.png"></div>
+    <!-- Навигация для администратора -->
+    <span v-if="isAdmin">
+          <nav class="nav_admin">
+            <div>
+              <img class="logo_nav_admin" alt="logo" src="../src/assets/img/owl.png" />
+            </div>
+            <router-link to="/disciplines">Дисциплины</router-link>
+            <router-link to="/teachers">Преподаватели</router-link>
+            <router-link to="/students">Студенты</router-link>
+            <router-link to="/profile">Профиль</router-link>
+          </nav>
+        </span>
 
-      </div>
-    </section>
+    <!-- Навигация для преподавателя -->
+    <span v-if="isTeacher">
+          <nav class="nav_teacher">
+            <div>
+              <img class="logo_nav_teacher" alt="logo" src="../src/assets/img/dmin.png" />
+            </div>
+            <router-link to="/schedule">Расписание</router-link>
+            <router-link to="/performance">Успеваемость</router-link>
+            <router-link to="/profile">Профиль</router-link>
+          </nav>
+        </span>
+
+    <!-- Навигация для студента -->
+    <span v-if="isStudent">
+          <nav class="nav_student">
+            <div>
+              <img class="logo_nav_student" alt="logo" src="../src/assets/img/admin.png" />
+            </div>
+            <router-link to="/schedule">Расписание</router-link>
+            <router-link to="/performance">Успеваемость</router-link>
+            <router-link to="/profile">Профиль</router-link>
+          </nav>
+        </span>
+
+
   </div>
+
 </template>
 
 <script>
-// import InteractiveMap from "@/components/InteractiveMap.vue";
-export default {
-  name: "HomeView",
-  components: {
-    // InteractiveMap,
-  },
-  data() {
-    return {
-      guids: [],
-      showBlock: false,
-    };
-  },
-  created() {
-    this.getGuids();
-  },
+  import { mapGetters } from 'vuex';
+
+  export default {
+    name: "HomeView",
+  computed: {
+  isAuthenticated() {
+  console.log('isAuthenticated:', this.$store.getters.isAuthenticated);
+  return this.$store.getters.isAuthenticated;
+},
+  isAdmin() {
+  console.log('isAdmin:', this.$store.getters.isAdmin);
+  return this.$store.getters.isAdmin;
+},
+  isTeacher() {
+  console.log('isTeacher:', this.$store.getters.isTeacher);
+  return this.$store.getters.isTeacher;
+},
+  isStudent() {
+  console.log('isStudent:', this.$store.getters.isStudent);
+  return this.$store.getters.isStudent;
+},
+  isAuthRelatedPage() {
+  console.log('isAuthRelatedPage:', this.$store.getters.isAuthRelatedPage);
+  return this.$store.getters.isAuthRelatedPage;
+},
+},
+
+
   methods: {
-    async getGuids() {
-      const url = "";
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
-      if (response.ok) {
-        const result = await response.json();
-        this.guids = result.data;
-        console.log("Result: ", result);
-      } else {
-        this.error = "Ошибка";
-        console.error(this.error);
-      }
-    },
-  },
+  // loginUser() {
+  //
+  //   this.$store.dispatch("login", { isAuthenticated: true, role: "admin" });
+  //   console.log(this.$store.state.isAuthenticated);
+  // },
+  // logoutUser() {
+  //
+  //   this.$store.dispatch("logout");
+  //   console.log(this.$store.state.isAuthenticated);
+  // },
+}
+
 };
 </script>

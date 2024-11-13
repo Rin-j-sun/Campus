@@ -1,6 +1,7 @@
 <template>
+  <router-view></router-view>
 
-  <div class="login_block">
+  <div class="login_block" >
     <div class="form_login">
       <h1>Добро Пожаловать В Кампус</h1>
       <form @submit.prevent="login">
@@ -20,7 +21,7 @@
         </div>
 
         <div class="buttons">
-          <button class="btn_auth_related" type="submit">Войти</button>
+          <router-link to="/firstpage"><button class="btn_auth_related" type="submit">Войти</button></router-link>
           <img src="../assets/img/image%201.png" />
         </div>
       </form>
@@ -74,16 +75,40 @@ export default {
       password: '',
     };
   },
+
+  computed: {
+    isAuthenticated() {
+      console.log('isAuthenticated:', this.$store.getters.isAuthenticated);
+      return this.$store.getters.isAuthenticated;
+    },
+    isAdmin() {
+      console.log('isAdmin:', this.$store.getters.isAdmin);
+      return this.$store.getters.isAdmin;
+    },
+    isTeacher() {
+      console.log('isTeacher:', this.$store.getters.isTeacher);
+      return this.$store.getters.isTeacher;
+    },
+    isStudent() {
+      console.log('isStudent:', this.$store.getters.isStudent);
+      return this.$store.getters.isStudent;
+    },
+    isAuthRelatedPage() {
+      console.log('isAuthRelatedPage:', this.$store.getters.isAuthRelatedPage);
+      return this.$store.getters.isAuthRelatedPage;
+    },
+  },
+
   methods: {
     ...mapActions(['login']),
     login() {
       // Логика аутентификации (например, проверка имени пользователя и пароля)
       if (this.username === 'admin' && this.password === 'admin') {
-        this.login({ isAuthenticated: true, role: 'admin' });
+        this.login({isAuthenticated: true, role: 'admin'});
       } else if (this.username === 'teacher' && this.password === 'teacher') {
-        this.login({ isAuthenticated: true, role: 'teacher' });
+        this.login({isAuthenticated: true, role: 'teacher'});
       } else if (this.username === 'student' && this.password === 'student') {
-        this.login({ isAuthenticated: true, role: 'student' });
+        this.login({isAuthenticated: true, role: 'student'});
       } else {
         alert('Неверные данные для входа');
       }

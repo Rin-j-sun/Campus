@@ -6,12 +6,12 @@
 
   <h1>Поиск студентов</h1>
   <form>
-    <input
-        class="input_form"
-        type="search"
-<!--        v-model="login"-->
-        placeholder="Введите значение для поиска"
-    />
+<!--    <input-->
+<!--        class="input_form"-->
+<!--        type="text"-->
+<!--&lt;!&ndash;        v-model="login"&ndash;&gt;-->
+<!--        placeholder="Введите значение для поиска"-->
+<!--    />-->
 
     <div>
       <select name="num_group">

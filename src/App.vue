@@ -1,8 +1,5 @@
 <template>
-  <div id="app">
-    <div v-if="isAuthRelatedPage">
-      <router-view></router-view>
-    </div>
+    <router-view></router-view>
 
     <div v-if="!isAuthRelatedPage">
       <nav class="navigation content">
@@ -10,57 +7,10 @@
           <img class="home_logo" alt="logo" src="../src/assets/img/logo.png" />
           <div class="home_page">
             <h1>Добро Пожаловать В Кампус</h1>
-            <router-link to="/components/login.vue">
+            <router-link to="/login">
               <button>Войти</button>
             </router-link>
           </div>
-        </span>
-
-        <!-- Навигация для авторизованного пользователя -->
-        <span class="nav" v-if="isAuthenticated">
-          <img class="logo_nav" alt="logo" src="../src/assets/img/logo.png'" />
-          <button><router-link to="/">Главная</router-link></button>
-          <button><router-link to="/schedule">Расписание</router-link></button>
-          <button><router-link to="/performance">Успеваемость</router-link></button>
-          <button><router-link to="/students">Студенты</router-link></button>
-          <button><router-link to="/profile">Профиль</router-link></button>
-        </span>
-
-        <!-- Навигация для администратора -->
-        <span v-if="isAdmin">
-          <nav class="nav_admin">
-            <div>
-              <img class="logo_nav_admin" alt="logo" src="../src/assets/img/owl.png" />
-            </div>
-            <router-link to="/disciplines">Дисциплины</router-link>
-            <router-link to="/teachers">Преподаватели</router-link>
-            <router-link to="/students">Студенты</router-link>
-            <router-link to="/profile">Профиль</router-link>
-          </nav>
-        </span>
-
-        <!-- Навигация для преподавателя -->
-        <span v-if="isTeacher">
-          <nav class="nav_teacher">
-            <div>
-              <img class="logo_nav_teacher" alt="logo" src="../src/assets/img/dmin.png" />
-            </div>
-            <router-link to="/schedule">Расписание</router-link>
-            <router-link to="/performance">Успеваемость</router-link>
-            <router-link to="/profile">Профиль</router-link>
-          </nav>
-        </span>
-
-        <!-- Навигация для студента -->
-        <span v-if="isStudent">
-          <nav class="nav_student">
-            <div>
-              <img class="logo_nav_student" alt="logo" src="../src/assets/img/admin.png" />
-            </div>
-            <router-link to="/schedule">Расписание</router-link>
-            <router-link to="/performance">Успеваемость</router-link>
-            <router-link to="/profile">Профиль</router-link>
-          </nav>
         </span>
       </nav>
 
@@ -68,7 +18,6 @@
         <img class="footer_background" alt="footer_background" src="../src/assets/img/image%203.png" />
       </footer>
     </div>
-  </div>
 </template>
 
 <script>
