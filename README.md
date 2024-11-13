@@ -11,6 +11,23 @@ This template should help get you started developing with Vue 3 in Vite.
 ```sh
 npm install
 ```
+## Установка firebase
+
+```sh
+npm install vuefire@next firebase --save
+```
+```sh
+npm install -g firebase-tools
+```
+```sh
+firebase login
+```
+```sh
+firebase init
+```
+```sh
+firebase deploy
+```
 ## Установка роутинга
 
 ```sh

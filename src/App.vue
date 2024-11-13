@@ -1,101 +1,116 @@
 <template>
-  <div id="app" v-if="isAuthRelatedPage">
-    <router-view></router-view>
-  </div>
-  <div class="container" v-if="!isAuthRelatedPage">
-    <nav class="navigation content">
-      <span class="home" v-if="!isAuthenticated">
-        <img
-            class="home_logo"
-            alt="logo"
-            src="../src/assets/img/logo.png"
-        />
-        <div class="home_page">
-
-          <h1>Добро Пожаловать В Кампус</h1>
-
-          <router-link to="/login" class=""><button>Войти</button></router-link>
-
-        </div>
-      </span>
-      <span class="nav" v-if="isAuthenticated">
-        <img
-            class="logo_nav"
-            alt="logo"
-            src="../src/assets/img/logo.png"
-        />
-        <button><router-link to="/">Главная</router-link></button>
-        <button><router-link to="/schedule">Расписание</router-link></button>
-        <button><router-link to="/performance">Успеваемость</router-link></button>
-        <button><router-link to="/students">Студенты</router-link></button>
-        <button><router-link to="/profile">Профиль</router-link></button>
-
-      </span>
-    </nav>
-    <div id="app">
+  <div id="app">
+    <div v-if="isAuthRelatedPage">
       <router-view></router-view>
     </div>
-    <span v-if="isAuth">
-      <nav class="nav_admin">
-        <span v-if="isAdmin">
-          <div>
-            <img
-                class="logo_nav_admin"
-                alt="logo"
-                src="../src/assets/img/owl.png"
-            />
-          </div>
-          <router-link to="/disciplines">Дисциплины</router-link>
-          <router-link to="/teachers">Преподаватели</router-link>
-          <router-link to="/students">Студенты</router-link>
-          <router-link to="/profile">Профиль</router-link>
 
+    <div v-if="!isAuthRelatedPage">
+      <nav class="navigation content">
+        <span class="home" v-if="!isAuthenticated">
+          <img class="home_logo" alt="logo" src="../src/assets/img/logo.png" />
+          <div class="home_page">
+            <h1>Добро Пожаловать В Кампус</h1>
+            <router-link to="/components/login.vue">
+              <button>Войти</button>
+            </router-link>
+          </div>
+        </span>
+
+        <!-- Навигация для авторизованного пользователя -->
+        <span class="nav" v-if="isAuthenticated">
+          <img class="logo_nav" alt="logo" src="../src/assets/img/logo.png'" />
+          <button><router-link to="/">Главная</router-link></button>
+          <button><router-link to="/schedule">Расписание</router-link></button>
+          <button><router-link to="/performance">Успеваемость</router-link></button>
+          <button><router-link to="/students">Студенты</router-link></button>
+          <button><router-link to="/profile">Профиль</router-link></button>
+        </span>
+
+        <!-- Навигация для администратора -->
+        <span v-if="isAdmin">
+          <nav class="nav_admin">
+            <div>
+              <img class="logo_nav_admin" alt="logo" src="../src/assets/img/owl.png" />
+            </div>
+            <router-link to="/disciplines">Дисциплины</router-link>
+            <router-link to="/teachers">Преподаватели</router-link>
+            <router-link to="/students">Студенты</router-link>
+            <router-link to="/profile">Профиль</router-link>
+          </nav>
+        </span>
+
+        <!-- Навигация для преподавателя -->
+        <span v-if="isTeacher">
+          <nav class="nav_teacher">
+            <div>
+              <img class="logo_nav_teacher" alt="logo" src="../src/assets/img/dmin.png" />
+            </div>
+            <router-link to="/schedule">Расписание</router-link>
+            <router-link to="/performance">Успеваемость</router-link>
+            <router-link to="/profile">Профиль</router-link>
+          </nav>
+        </span>
+
+        <!-- Навигация для студента -->
+        <span v-if="isStudent">
+          <nav class="nav_student">
+            <div>
+              <img class="logo_nav_student" alt="logo" src="../src/assets/img/admin.png" />
+            </div>
+            <router-link to="/schedule">Расписание</router-link>
+            <router-link to="/performance">Успеваемость</router-link>
+            <router-link to="/profile">Профиль</router-link>
+          </nav>
         </span>
       </nav>
-    </span>
 
-  <footer class="footer_container" v-if="!isAuthRelatedPage">
-    <img
-        class="footer_background"
-        alt="footer_background"
-        src="../src/assets/img/image%203.png"
-    />
-
-  </footer>
+      <footer class="footer_container" v-if="!isAuthRelatedPage">
+        <img class="footer_background" alt="footer_background" src="../src/assets/img/image%203.png" />
+      </footer>
+    </div>
   </div>
 </template>
 
-<style></style>
 <script>
-import store from "@/store/index.js";
+import { mapGetters } from 'vuex';
+
 export default {
-  data() {
-    return {
-      isAuthenticated: false,
-      isAdmin: false,
-      isAuthRelatedPage: false,
-    };
-  },
   computed: {
-    isAuth: () => this.$store.state.isAuthenticated,
-    isAdmin: () => this.$store.state.isAdmin,
-  },
-  watch: {
-    $route(to) {
-      this.checkAuthRelatedPage(to.path);
+    isAuthenticated() {
+      console.log('isAuthenticated:', this.$store.getters.isAuthenticated);
+      return this.$store.getters.isAuthenticated;
+    },
+    isAdmin() {
+      console.log('isAdmin:', this.$store.getters.isAdmin);
+      return this.$store.getters.isAdmin;
+    },
+    isTeacher() {
+      console.log('isTeacher:', this.$store.getters.isTeacher);
+      return this.$store.getters.isTeacher;
+    },
+    isStudent() {
+      console.log('isStudent:', this.$store.getters.isStudent);
+      return this.$store.getters.isStudent;
+    },
+    isAuthRelatedPage() {
+      console.log('isAuthRelatedPage:', this.$store.getters.isAuthRelatedPage);
+      return this.$store.getters.isAuthRelatedPage;
     },
   },
+
+
   methods: {
-    checkAuthRelatedPage(path) {
-      this.isAuthRelatedPage =
-          path === "/login";
-    },
-    scrollToSection(sectionId) {
-      const section = document.getElementById(sectionId);
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth" });
-      }
-    },
-  },
+    // loginUser() {
+    //
+    //   this.$store.dispatch("login", { isAuthenticated: true, role: "admin" });
+    //   console.log(this.$store.state.isAuthenticated);
+    // },
+    // logoutUser() {
+    //
+    //   this.$store.dispatch("logout");
+    //   console.log(this.$store.state.isAuthenticated);
+    // },
+  }
+
 };
 </script>

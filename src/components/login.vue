@@ -65,40 +65,27 @@ img{
 </style>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   data() {
     return {
-      login: "",
-      password: "",
-      error: "",
-      showBlock: false,
+      username: '',
+      password: '',
     };
   },
   methods: {
-    async login() {
-      const url = "http://108.162.212.*:8000";
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          login: this.login,
-          password: this.password,
-        }),
-      });
-      if (response.ok) {
-        this.$router.push("/"); // Перенаправляем пользователя на главную страницу
+    ...mapActions(['login']),
+    login() {
+      // Логика аутентификации (например, проверка имени пользователя и пароля)
+      if (this.username === 'admin' && this.password === 'admin') {
+        this.login({ isAuthenticated: true, role: 'admin' });
+      } else if (this.username === 'teacher' && this.password === 'teacher') {
+        this.login({ isAuthenticated: true, role: 'teacher' });
+      } else if (this.username === 'student' && this.password === 'student') {
+        this.login({ isAuthenticated: true, role: 'student' });
       } else {
-        this.error = "Неверные учетные данные";
-        this.login = "";
-        this.password = "";
-        this.showBlock = true;
-        setTimeout(() => {
-          this.showBlock = false;
-        }, 3000);
-        console.error("Ошибка:", this.error);
+        alert('Неверные данные для входа');
       }
     },
   },

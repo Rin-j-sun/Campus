@@ -3,8 +3,11 @@ import HomeView from "../views/HomeView.vue";
 import searchStudent from "@/components/searchStudent.vue";
 import addingStudent from "@/components/addingStudent.vue";
 import login from "@/components/login.vue";
-import profile from "@/components/profile.vue";
+import AdminPage from "@/components/AdminPage.vue";
+import TeacherPage from "@/components/TeacherPage.vue";
+import StudentPage from "@/components/StudentPage.vue";
 import assessmentStudent from "@/components/assessmentStudent.vue";
+import store from '@/store';
 
 
 const routes = [
@@ -15,15 +18,27 @@ const routes = [
     },
 
      {
-         path: "/login",
+         path: "/@/components/login",
          name: "login",
-        component: login,
+         component: login,
+         meta: { requiresAuth: false },
      },
-     {
-         path: "/profile",
-         name: "profile",
-         component: profile,
-     },
+    {
+        path: '/admin',
+        component: AdminPage,
+        meta: { requiresAuth: true, role: 'admin' }
+    },
+
+    {   path: '/teacher',
+        component: TeacherPage,
+        meta: { requiresAuth: true, role: 'teacher' }
+    },
+
+    { path: '/student',
+        component: StudentPage,
+        meta: { requiresAuth: true, role: 'student' }
+    },
+
     {
         path: "/assessment",
         name: "assessmentStudent",
@@ -46,4 +61,23 @@ const router = createRouter({
     routes,
 });
 
+router.beforeEach((to, from, next) => {
+    const isAuthenticated = store.getters.isAuthenticated;
+    const userRole = store.getters.role;
+
+    if (to.meta.requiresAuth) {
+        if (!isAuthenticated) {
+            next('/login'); // Если не авторизован, перенаправляем на страницу логина
+        } else if (to.meta.role && to.meta.role !== userRole) {
+            next('/'); // Если роль не совпадает, перенаправляем на главную страницу
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
+
 export default router;
+
+
