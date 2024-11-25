@@ -3,7 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import searchStudent from "@/components/searchStudent.vue";
 import addingStudent from "@/components/addingStudent.vue";
 import login from "@/components/login.vue";
-import firstPage from "@/components/firstPage.vue";
+import firstpage from "@/components/firstPage.vue";
 import AdminPage from "@/components/AdminPage.vue";
 import TeacherPage from "@/components/TeacherPage.vue";
 import StudentPage from "@/components/StudentPage.vue";
@@ -18,18 +18,18 @@ const routes = [
         component: HomeView,
     },
 
-     {
-         path: "/login",
-         name: "login",
-         component: login,
-         meta: { requiresAuth: false },
-     },
     {
-         path: "/firstpage",
-         name: "firstpage",
-         component: firstPage,
-         meta: { requiresAuth: true },
-     },
+        path: "/login",
+        name: "login",
+        component: login,
+        meta: { requiresAuth: false },
+    },
+
+    {
+        path: '/firstpage',
+        component: () => import('@/components/FirstPage.vue'),
+        meta: { requiresAuth: true },
+    },
     {
         path: '/admin',
         component: AdminPage,
@@ -71,19 +71,25 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const isAuthenticated = store.getters.isAuthenticated;
     const userRole = store.getters.role;
+    console.log(`Navigating to: ${to.path}, Authenticated: ${isAuthenticated}, Role: ${userRole}`);
 
     if (to.meta.requiresAuth) {
         if (!isAuthenticated) {
-            next('/login'); // Если не авторизован, перенаправляем на страницу логина
+            next("/login");
         } else if (to.meta.role && to.meta.role !== userRole) {
-            next('/'); // Если роль не совпадает, перенаправляем на главную страницу
+            next("/"); // Пользователь не имеет нужной роли
         } else {
             next();
         }
     } else {
         next();
     }
+
+    if (store.state.loading) {
+        next(false); // Блокируем переход, пока статус не загружен
+    }
 });
+
 
 export default router;
 

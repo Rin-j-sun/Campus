@@ -1,16 +1,14 @@
 <template>
-  <router-view></router-view>
-
-  <div class="login_block" v-if="!isAuthRelatedPage && !isAuthenticated">
+  <div class="login_block">
     <div class="form_login">
       <h1>Добро Пожаловать В Кампус</h1>
       <form @submit.prevent="login">
         <div class="inputs_login">
           <input
               class="input_form"
-              type="text"
+              type="email"
               v-model="login"
-              placeholder="Логин"
+          placeholder="Логин (Email)"
           />
           <input
               class="input_form"
@@ -19,99 +17,53 @@
               placeholder="Пароль"
           />
         </div>
-
         <div class="buttons">
-          <router-link to="/firstpage"><button class="btn_auth_related" type="submit">Войти</button></router-link>
+          <button class="btn_auth_related" type="submit">Войти</button>
           <img src="../assets/img/image%201.png" />
         </div>
       </form>
     </div>
-    <div class="show-error" v-if="showBlock">
+    <div class="show-error" v-if="error">
       {{ error }}
     </div>
   </div>
 </template>
 
-<style>
-.login_block{
-  margin-left: 60%;
-}
-h1 {
-  width: 370%;
-  margin-bottom: 10%;
-}
-
-form{
-  margin-left: 30%;
-}
-input{
-  margin-bottom: 30%;
-}
-
-input::placeholder {
-  font-weight: bold;
-  opacity: 0.5;
-  color: black;
-  padding-left: 10px;
-}
-
-button{
-  margin-left: 80%;
-  margin-bottom: 30%;
-}
-
-img{
-  margin-left: 25%;
-}
-</style>
-
 <script>
+import { auth } from "@/firebase.js";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { mapActions } from 'vuex';
-// import {auth} from "@/firebase.js";
 
 export default {
   data() {
     return {
-      login: '',
+      login: '',  // email
       password: '',
+      error: null,
     };
   },
 
-  computed: {
-    isAuthenticated() {
-      console.log('isAuthenticated:', this.$store.getters.isAuthenticated);
-      return this.$store.getters.isAuthenticated;
-    },
-    isAdmin() {
-      console.log('isAdmin:', this.$store.getters.isAdmin);
-      return this.$store.getters.isAdmin;
-    },
-    isTeacher() {
-      console.log('isTeacher:', this.$store.getters.isTeacher);
-      return this.$store.getters.isTeacher;
-    },
-    isStudent() {
-      console.log('isStudent:', this.$store.getters.isStudent);
-      return this.$store.getters.isStudent;
-    },
-    isAuthRelatedPage() {
-      console.log('isAuthRelatedPage:', this.$store.getters.isAuthRelatedPage);
-      return this.$store.getters.isAuthRelatedPage;
-    },
-  },
-
   methods: {
-    ...mapActions(['login']),
-    login() {
-      // Логика аутентификации (например, проверка имени пользователя и пароля)
-      if (this.username === 'admin' && this.password === 'admin') {
-        this.login({isAuthenticated: true, role: 'admin'});
-      } else if (this.username === 'teacher' && this.password === 'teacher') {
-        this.login({isAuthenticated: true, role: 'teacher'});
-      } else if (this.username === 'student' && this.password === 'student') {
-        this.login({isAuthenticated: true, role: 'student'});
-      } else {
-        alert('Неверные данные для входа');
+    ...mapActions(['setAuth', 'setUser']),
+    async login() {
+      try {
+        // Проверка, если email и пароль не пустые
+        if (!this.login || !this.password) {
+          this.error = "Пожалуйста, введите логин и пароль.";
+          return;
+        }
+
+        // Выполнение входа через Firebase Auth
+        const userCredential = await signInWithEmailAndPassword(auth, this.login, this.password);
+        const user = userCredential.user;
+
+        this.$store.dispatch('setAuth', true); // Устанавливаем флаг аутентификации
+        this.$store.dispatch('setUser', user); // Сохраняем данные пользователя
+
+        this.$router.push('/firstpage'); // Перенаправляем на главную страницу после авторизации
+      } catch (error) {
+        this.error = "Неверные данные для входа."; // Обработка ошибок
+        console.error(error);
       }
     },
   },

@@ -1,5 +1,5 @@
 <template>
-
+  <router-view></router-view>
     <div v-if="!isAuthRelatedPage && !isAuthenticated && !isLoginPage">
       <nav class="navigation content">
         <span class="home">
@@ -18,13 +18,16 @@
       </footer>
     </div>
 
-  <router-view></router-view>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-
+import { store } from "@/store";
 export default {
+      created() {
+      store.dispatch("monitorAuthState");
+    },
+
   computed: {
     isAuthenticated() {
       console.log('isAuthenticated:', this.$store.getters.isAuthenticated);

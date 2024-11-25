@@ -1,97 +1,121 @@
 <template>
-  <div class="container">
-    <div class="cabinet content">
-      <h1>Личный кабинет</h1>
-      <div class="cabinet_content">
-        <div class="cabinet_head_content">
-          <div>
+  <div class="teacher-dashboard">
+    <div class="dashboard-header">
+      <h1>Личный кабинет преподавателя</h1>
+    </div>
 
-
+    <div class="dashboard-content">
+      <!-- Секция профиля -->
+      <section class="profile-section">
+        <h3>Мой профиль</h3>
+        <div class="profile-info">
+          <img class="profile-photo" src="../assets/img/teacher.png" alt="Фото профиля" />
+          <div class="profile-details">
+            <p><strong>Имя:</strong> Преподаватель</p>
+            <p><strong>ID:</strong> 345678</p>
           </div>
-
-
         </div>
-        <div class="line_element_cabinet"></div>
+      </section>
+
+      <!-- Секция управления -->
+      <section class="teacher-controls">
+        <h3>Доступные функции</h3>
+        <ul>
+          <li><router-link to="/assessment">Проверить оценки</router-link></li>
+          <li><router-link to="/adding">Добавить новую оценку</router-link></li>
+          <li><router-link to="/search">Поиск студентов</router-link></li>
+        </ul>
+      </section>
+
+      <!-- Кнопка выхода -->
+      <div class="logout-button">
+        <router-link to="/" @click="logout">
+          <button>Выйти</button>
+        </router-link>
       </div>
-      <section v-if="activeSection === 'profile'" class="profile">
-        <div class="profile_block">
-
-            <div>
-              <h3>Мой профиль</h3>
-              <img src="../assets/img/photo.png" />
-              <p>Кто-то</p>
-
-              <p>id</p>
-            </div>
-          <div>
-
-            <div>
-              <p>Организация :</p>
-              <p>Семестр :</p>
-              <p>Средний балл :</p>
-              <p>Годы обучения :</p>
-
-            </div>
-
-          <div>
-            <p>Томский Техникум Информационных Технологий:</p>
-            <p>4</p>
-            <p>4.7</p>
-            <p>2022 - 2026</p>
-            </div>
-            </div>
-
-
-        </div>
-      </section>
-
-      <section>
-
-        <h3>О студенте</h3>
-
-        <div>
-          <p>Дата рождения</p>
-          <p>Пол</p>>
-        </div>
-
-        <div>
-          <p>1st Января 2002</p>
-          <p>Мужской</p>
-        </div>
-
-        <div>
-          <p>№ группы</p>
-          <p>Адрес</p>
-        </div>
-
-        <div>
-          <p>421</p>
-          <p>12, abc street, defgh, ijklm - 123456.</p>
-        </div>
-
-        <router-link to="/public" @click="logout"><button>Выход</button></router-link>
-
-      </section>
-
-
     </div>
   </div>
 </template>
 
-<style>
-
-
-</style>
-
 <script setup>
-import { ref } from "vue";
-
-const activeSection = ref("profile");
-
-function setActiveSection(section) {
-  activeSection.value = section;
+function logout() {
+  console.log("Преподаватель вышел из системы");
 }
 </script>
-<style scoped></style>
-<script setup lang="ts">
-</script>
+
+<style scoped>
+.teacher-dashboard {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-section,
+.teacher-controls {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  margin: 10px 0;
+}
+
+ul li a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  text-decoration: underline;
+}
+
+.logout-button {
+  text-align: center;
+}
+
+.logout-button button {
+  background: #ff4d4d;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.logout-button button:hover {
+  background: #ff1a1a;
+}
+</style>

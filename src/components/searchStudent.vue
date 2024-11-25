@@ -1,137 +1,70 @@
 <template>
-  <div class="options">
-
-
-  </div>
-
-  <h1>Поиск студентов</h1>
-  <form>
-<!--    <input-->
-<!--        class="input_form"-->
-<!--        type="text"-->
-<!--&lt;!&ndash;        v-model="login"&ndash;&gt;-->
-<!--        placeholder="Введите значение для поиска"-->
-<!--    />-->
-
-    <div>
-      <select name="num_group">
-        <option value="">Выберите № группы</option>
-      </select>
+  <div class="form_block">
+    <div class="form_container">
+      <h1>Поиск студента</h1>
+      <form @submit.prevent="searchStudent">
+        <div class="inputs_block">
+          <input
+              class="input_form"
+              type="text"
+              v-model="searchQuery"
+              placeholder="Введите ID или имя студента"
+          />
+        </div>
+        <div class="buttons">
+          <button class="btn_form" type="submit">Искать</button>
+        </div>
+      </form>
+      <div class="results_block" v-if="results.length">
+        <h2>Результаты:</h2>
+        <ul>
+          <li v-for="student in results" :key="student.id">
+            {{ student.name }} (ID: {{ student.id }}, Email: {{ student.email }})
+          </li>
+        </ul>
+      </div>
     </div>
-    <button type="submit">Поиск</button>
-  </form>
+    <div class="show-error" v-if="error">
+      {{ error }}
+    </div>
+  </div>
 </template>
 
-<style scoped>
-.item {
-  margin-top: 2rem;
-  display: flex;
-  position: relative;
-}
-
-.details {
-  flex: 1;
-  margin-left: 1rem;
-}
-
-i {
-  display: flex;
-  place-items: center;
-  place-content: center;
-  width: 32px;
-  height: 32px;
-
-  color: var(--color-text);
-}
-
-h3 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin-bottom: 0.4rem;
-  color: var(--color-heading);
-}
-
-@media (min-width: 1024px) {
-  .item {
-    margin-top: 0;
-    padding: 0.4rem 0 1rem calc(var(--section-gap) / 2);
-  }
-
-  i {
-    top: calc(50% - 25px);
-    left: -26px;
-    position: absolute;
-    border: 1px solid var(--color-border);
-    background: var(--color-background);
-    border-radius: 8px;
-    width: 50px;
-    height: 50px;
-  }
-
-  .item:before {
-    content: ' ';
-    border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    bottom: calc(50% + 25px);
-    height: calc(50% - 25px);
-  }
-
-  .item:after {
-    content: ' ';
-    border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    top: calc(50% + 25px);
-    height: calc(50% - 25px);
-  }
-
-  .item:first-of-type:before {
-    display: none;
-  }
-
-  .item:last-of-type:after {
-    display: none;
-  }
-}
-</style>
 <script>
 export default {
   data() {
     return {
-      login: "",
-      password: "",
-      error: "",
-      showBlock: false,
+      searchQuery: '',
+      results: [],
+      error: null,
     };
   },
+
   methods: {
-    async login() {
-      const url = "http://127.0.0.1:8000/api/login";
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          email: this.email,
-          password: this.password,
-        }),
-      });
-      if (response.ok) {
-        this.$router.push("/"); // Перенаправляем пользователя на главную страницу
-      } else {
-        this.error = "Неверные учетные данные";
-        this.login = "";
-        this.password = "";
-        this.showBlock = true;
-        setTimeout(() => {
-          this.showBlock = false;
-        }, 3000);
-        console.error("Ошибка:", this.error);
+    async searchStudent() {
+      try {
+        // Проверка ввода поискового запроса
+        if (!this.searchQuery) {
+          this.error = "Пожалуйста, введите запрос для поиска.";
+          return;
+        }
+
+        // Имитация поиска студента (замените на вызов API или Firestore)
+        console.log(`Поиск студента по запросу: ${this.searchQuery}`);
+        this.results = [
+          { id: "123", name: "Иван Иванов", email: "ivanov@example.com" },
+          { id: "124", name: "Петр Петров", email: "petrov@example.com" },
+        ]; // Пример статических данных
+        this.error = null;
+      } catch (e) {
+        console.error(e);
+        this.error = "Ошибка при поиске студента.";
       }
     },
   },
 };
 </script>
+
+<style scoped>
+/* Добавьте стили, аналогичные login.vue */
+</style>

@@ -1,52 +1,73 @@
 <template>
-
-  <div class="login_block">
-    <div class="form_login">
-      <h1>Успеваемость [] группы по []</h1>
-
-      <div class="assessment_table">
-        <p>Студент</p><p>Дата</p><p>Сред. балл</p>
-
-      </div>
-
+  <div class="form_block">
+    <div class="form_container">
+      <h1>Оценка студента</h1>
+      <form @submit.prevent="submitAssessment">
+        <div class="inputs_block">
+          <input
+              class="input_form"
+              type="text"
+              v-model="studentId"
+              placeholder="ID студента"
+          />
+          <input
+              class="input_form"
+              type="number"
+              v-model="grade"
+              placeholder="Оценка"
+              min="0"
+              max="100"
+          />
+          <textarea
+              class="input_form"
+              v-model="comments"
+              placeholder="Комментарии (опционально)"
+          ></textarea>
+        </div>
+        <div class="buttons">
+          <button class="btn_form" type="submit">Сохранить</button>
+        </div>
+      </form>
     </div>
-    <div class="show-error" v-if="showBlock">
+    <div class="show-error" v-if="error">
       {{ error }}
     </div>
   </div>
 </template>
 
-<style>
-.login_block{
-  margin-left: 60%;
-}
-h1 {
-  width: 370%;
-  margin-bottom: 10%;
-}
+<script>
+export default {
+  data() {
+    return {
+      studentId: '',
+      grade: '',
+      comments: '',
+      error: null,
+    };
+  },
 
-form{
-  margin-left: 30%;
-}
-input{
-  margin-bottom: 30%;
-}
+  methods: {
+    async submitAssessment() {
+      try {
+        // Проверка, если ID студента и оценка заполнены
+        if (!this.studentId || !this.grade) {
+          this.error = "Пожалуйста, заполните все обязательные поля.";
+          return;
+        }
 
-input::placeholder {
-  font-weight: bold;
-  opacity: 0.5;
-  color: black;
-  padding-left: 10px;
-}
-
-button{
-  margin-left: 80%;
-  margin-bottom: 30%;
-}
-
-img{
-  margin-left: 25%;
-}
-</style>
-<script setup lang="ts">
+        // Имитация сохранения данных (замените на вызов API или Firestore)
+        console.log(`ID студента: ${this.studentId}, Оценка: ${this.grade}, Комментарии: ${this.comments}`);
+        alert("Оценка успешно сохранена!");
+        this.error = null;
+      } catch (e) {
+        console.error(e);
+        this.error = "Ошибка при сохранении оценки.";
+      }
+    },
+  },
+};
 </script>
+
+<style scoped>
+/*  стили, аналогичные login.vue */
+</style>
